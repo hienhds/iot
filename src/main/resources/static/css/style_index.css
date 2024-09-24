@@ -152,7 +152,7 @@ body {
 
 }
 .temp-normal {
-    font-size: 3vw;
+    font-size: 2vw;
     /* Điều chỉnh kích thước chữ theo chiều rộng màn hình */
     white-space: nowrap;
     /* Ngăn chữ xuống dòng */
@@ -225,7 +225,7 @@ body {
 
 }
 .li-normal {
-    font-size: 3vw;
+    font-size: 2vw;
     /* Điều chỉnh kích thước chữ theo chiều rộng màn hình */
     white-space: nowrap;
     /* Ngăn chữ xuống dòng */
@@ -299,7 +299,7 @@ body {
 
 }
 .hum-normal {
-    font-size: 3vw;
+    font-size: 2vw;
     /* Điều chỉnh kích thước chữ theo chiều rộng màn hình */
     white-space: nowrap;
     /* Ngăn chữ xuống dòng */
