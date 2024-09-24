@@ -193,16 +193,6 @@ public class MqttService {
         dataCount = 0;
     }
 
-//    public void publishLampCommand(String command) {
-//        try {
-//            String topic = "esp32/lamp";
-//            MqttMessage mqttMessage = new MqttMessage(command.getBytes());
-//            mqttClient.publish(topic, mqttMessage);
-//            System.out.println("Published message to topic: " + topic + ", command: " + command);
-//        } catch (MqttException e) {
-//            e.printStackTrace();
-//        }
-//    }
     public void publishDeviceCommand(String device, String command){
         try{
             String topic = "esp32/" + device;
