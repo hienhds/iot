@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Mảng các biểu tượng tương ứng với các khoảng nhiệt độ
         const icons = [
             '../image/icon_toi.jpg',
-            '../image/icon_toi.jpg',
+            '../image/icon_sang.jpg',
             '../image/icon_sang.jpg',
             '../image/icon_sang.jpg',
             '../image/icon_sang.jpg'
