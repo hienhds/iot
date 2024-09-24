@@ -1,0 +1,385 @@
+/* .centered-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+} */
+
+body {
+    background-image: url('../image/bg1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;	
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", sans-serif;
+    /* background: #f6f9ff; */
+    color: #444444;
+}
+
+.navbar {
+    background-color: #f8f9fa; 
+    border-bottom: 2px solid #e0e0e0; 
+}
+
+.nav-link {
+    font-weight: bold; 
+    padding: 10px 20px; 
+    transition: background-color 0.3s ease, color 0.3s ease; 
+}
+.nav-link:hover {
+    background-color: #9dd5e8; 
+    color: #ffffff; 
+    border-radius: 5px; /* Bo góc nhẹ cho phần nền */
+}
+
+/* Tùy chỉnh liên kết đang active */
+.nav-link .active {
+    border-radius: 5px;
+}
+
+
+/* Tùy chỉnh màu sắc khi thanh điều hướng bị thu nhỏ (dành cho thiết bị di động) */
+@media (max-width: 576px) {
+    .nav-link {
+        padding: 8px 10px; /* Giảm padding trên màn hình nhỏ */
+        font-size: 14px; /* Giảm kích thước font chữ */
+    }
+}
+
+/* css cho phan control */
+
+.col-md-6 {
+    border-radius: 5px;
+    /* Bo góc 15px */
+    overflow: hidden;
+    /* Đảm bảo nội dung bên trong cũng tuân theo bo góc */
+}
+
+.img-fluid-control {
+    width: 40%;
+}
+
+.control-img {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.control-img[data-state="on"] {
+    opacity: 1;
+}
+
+.control-img[data-state="off"] {
+    opacity: 0.5;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 250px;
+    /* Hoặc kích thước bạn muốn */
+    object-fit: cover;
+    /* Đảm bảo hình ảnh chiếm toàn bộ không gian mà không làm méo hình */
+}
+
+/* css cho */
+
+.card-img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: black;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    /* Ngăn nội dung tràn ra ngoài */
+}
+
+
+
+.card-img-top {
+    opacity: 0.4;
+    transition: opacity 0.5s ease-in-out;
+}
+
+
+.col-6 {
+    display: flex;
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+    justify-content: center;
+    /* Căn giữa theo chiều ngang */
+}
+
+#temperature-icon {
+    margin-right: 5px;
+}
+
+#temperature {
+    margin-left: 5px;
+    transition: color 0.5s ease-in-out;
+}
+
+.temperature-bar {
+    position: relative;
+    width: 90%;
+    height: 20px;
+    border-radius: 10px;
+    background: #ddd; 
+    margin: 0 auto;
+    transition: width 0.5s ease;
+}
+
+.progress {
+    height: 100%;
+    width: 0; /* Ban đầu thanh tiến trình là 0 */
+    border-radius: 10px;
+    transition: width 0.5s ease, background-color 0.5s ease; /* Hiệu ứng mượt mà khi thay đổi */
+}
+.temperature-bar .icon {
+    /* color: black; */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: x-large;
+
+}
+.temp-normal {
+    font-size: 3vw;
+    /* Điều chỉnh kích thước chữ theo chiều rộng màn hình */
+    white-space: nowrap;
+    /* Ngăn chữ xuống dòng */
+}
+
+.temp-icon img {
+    width: 10vw;
+    /* Điều chỉnh kích thước icon theo chiều rộng màn hình */
+    height: auto;
+    /* Giữ tỉ lệ gốc của hình ảnh */
+}
+
+/* Media queries cho màn hình nhỏ hơn */
+@media (max-width: 768px) {
+    .temp-normal {
+        font-size: 4vw;
+        /* Điều chỉnh kích thước chữ cho màn hình nhỏ hơn */
+    }
+
+    .temp-icon img {
+        width: 15vw;
+        /* Điều chỉnh kích thước icon cho màn hình nhỏ hơn */
+    }
+}
+
+/* Media queries cho màn hình rất nhỏ */
+@media (max-width: 480px) {
+    .temp-normal {
+        font-size: 5vw;
+        /* Điều chỉnh kích thước chữ cho màn hình rất nhỏ */
+    }
+
+    .temp-icon img {
+        width: 20vw;
+        /* Điều chỉnh kích thước icon cho màn hình rất nhỏ */
+    }
+}
+
+#light-icon {
+    margin-right: 5px;
+}
+
+#light {
+    margin-left: 5px;
+    transition: color 0.5s ease-in-out;
+}
+
+.light-bar {
+    position: relative;
+    width: 90%;
+    height: 20px;
+    border-radius: 10px;
+    background: #ddd; 
+    margin: 0 auto;
+    transition: width 0.5s ease;
+}
+
+.light-progress {
+    height: 100%;
+    width: 0; /* Ban đầu thanh tiến trình là 0 */
+    border-radius: 10px;
+    transition: width 0.5s ease, background-color 0.5s ease; /* Hiệu ứng mượt mà khi thay đổi */
+}
+.light-icon {
+    /* color: black; */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: x-large;
+
+}
+.li-normal {
+    font-size: 3vw;
+    /* Điều chỉnh kích thước chữ theo chiều rộng màn hình */
+    white-space: nowrap;
+    /* Ngăn chữ xuống dòng */
+}
+
+.li-icon img {
+    width: 10vw;
+    /* Điều chỉnh kích thước icon theo chiều rộng màn hình */
+    height: auto;
+    /* Giữ tỉ lệ gốc của hình ảnh */
+}
+
+/* Media queries cho màn hình nhỏ hơn */
+@media (max-width: 768px) {
+    .li-normal {
+        font-size: 4vw;
+        /* Điều chỉnh kích thước chữ cho màn hình nhỏ hơn */
+    }
+
+    .li-icon img {
+        width: 15vw;
+        /* Điều chỉnh kích thước icon cho màn hình nhỏ hơn */
+    }
+}
+
+/* Media queries cho màn hình rất nhỏ */
+@media (max-width: 480px) {
+    .li-normal {
+        font-size: 5vw;
+        /* Điều chỉnh kích thước chữ cho màn hình rất nhỏ */
+    }
+
+    .li-icon img {
+        width: 20vw;
+        /* Điều chỉnh kích thước icon cho màn hình rất nhỏ */
+    }
+}
+
+
+#humidity-icon {
+    margin-right: 5px;
+}
+
+#humidity {
+    margin-left: 5px;
+    transition: color 0.5s ease-in-out;
+}
+
+.humidity-bar {
+    position: relative;
+    width: 90%;
+    height: 20px;
+    border-radius: 10px;
+    background: #ddd; 
+    margin: 0 auto;
+    transition: width 0.5s ease;
+}
+
+.humidity-progress {
+    height: 100%;
+    width: 0; /* Ban đầu thanh tiến trình là 0 */
+    border-radius: 10px;
+    transition: width 0.5s ease, background-color 0.5s ease; /* Hiệu ứng mượt mà khi thay đổi */
+}
+.humidity-icon {
+    /* color: black; */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: x-large;
+
+}
+.hum-normal {
+    font-size: 3vw;
+    /* Điều chỉnh kích thước chữ theo chiều rộng màn hình */
+    white-space: nowrap;
+    /* Ngăn chữ xuống dòng */
+}
+
+.hum-icon img {
+    width: 10vw;
+    /* Điều chỉnh kích thước icon theo chiều rộng màn hình */
+    height: auto;
+    /* Giữ tỉ lệ gốc của hình ảnh */
+}
+
+/* Media queries cho màn hình nhỏ hơn */
+@media (max-width: 768px) {
+    .hum-normal {
+        font-size: 4vw;
+        /* Điều chỉnh kích thước chữ cho màn hình nhỏ hơn */
+    }
+
+    .hum-icon img {
+        width: 15vw;
+        /* Điều chỉnh kích thước icon cho màn hình nhỏ hơn */
+    }
+}
+
+/* Media queries cho màn hình rất nhỏ */
+@media (max-width: 480px) {
+    .hum-normal {
+        font-size: 5vw;
+        /* Điều chỉnh kích thước chữ cho màn hình rất nhỏ */
+    }
+
+    .hum-icon img {
+        width: 20vw;
+        /* Điều chỉnh kích thước icon cho màn hình rất nhỏ */
+    }
+}
+
+/* Định dạng nút Back to Top giống như hình */
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #9dd5e8;
+    /* Màu nền hồng nhạt */
+    color: white;
+    /* Màu biểu tượng */
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    /* Bo tròn các góc */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    /* Đổ bóng nhẹ */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s, visibility 0.4s;
+    border: none;
+}
+
+#back-to-top:hover {
+    background-color: #3aaed4;
+    /* Màu nền khi hover */
+}
+
+/* Hiển thị nút khi cuộn trang */
+#back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Add spinning animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spin {
+    animation: spin 2s linear infinite;
+}

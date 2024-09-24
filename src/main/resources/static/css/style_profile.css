@@ -1,0 +1,157 @@
+/* style_profile.css */
+
+/* General settings */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('../image/bg1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Thiết lập màu nền và đường viền dưới cho navbar */
+.navbar {
+    background-color: #f8f9fa; /* Màu nền sáng */
+    border-bottom: 2px solid #e0e0e0; /* Đường viền dưới nhẹ */
+}
+
+.nav-link {
+    font-weight: bold; /* In đậm chữ */
+    padding: 10px 20px; /* Khoảng cách padding rộng */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+}
+
+/* Thiết lập màu nền khi di chuột vào các liên kết */
+.nav-link:hover {
+    background-color: #9dd5e8; /* Đổi màu nền khi hover */
+    color: #ffffff; /* Đổi màu chữ khi hover */
+    border-radius: 5px; /* Bo góc nhẹ cho phần nền */
+}
+
+.main {
+    display: flex;
+    justify-content: center;   /* Căn giữa theo chiều ngang */
+    align-items: center;       /* Căn giữa theo chiều dọc */
+    min-height: 100vh;         /* Chiều cao của toàn bộ màn hình */
+}
+
+/* Tùy chỉnh liên kết đang active */
+.nav-link .active {
+    border-radius: 5px;
+}
+
+.custom-background {
+    background-image: url('../image/bg-div.jpg'); /* Đường dẫn tới ảnh nền */
+    background-size: cover; /* Để ảnh nền bao phủ toàn bộ vùng */
+    background-position: center; /* Ảnh sẽ được canh giữa */
+    background-repeat: no-repeat; /* Không lặp lại ảnh nền */
+}
+
+
+.card{
+    border:none;
+
+    position:relative;
+    overflow:hidden;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.card:before{
+
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:4px;
+    height:100%;
+    background-color:#E1BEE7;
+    transform:scaleY(1);
+    transition:all 0.5s;
+    transform-origin: bottom
+}
+
+.card:after{
+
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:4px;
+    height:100%;
+    background-color:#8E24AA;
+    transform:scaleY(0);
+    transition:all 0.5s;
+    transform-origin: bottom
+}
+
+.card:hover::after{
+    transform:scaleY(1);
+}
+
+
+.fonts{
+    font-size:11px;
+}
+
+.social-list{
+    display:flex;
+    list-style:none;
+    justify-content:center;
+    padding:0;
+}
+
+.social-list li{
+    padding:10px;
+    color:#8E24AA;
+    font-size:19px;
+}
+
+
+.buttons button:nth-child(1){
+    border:1px solid #8E24AA !important;
+    color:#8E24AA;
+    height:40px;
+}
+
+.buttons button:nth-child(1):hover{
+    border:1px solid #8E24AA !important;
+    color:#fff;
+    height:40px;
+    background-color:#8E24AA;
+}
+
+.buttons button:nth-child(2){
+    border:1px solid #8E24AA !important;
+    background-color:#8E24AA;
+    color:#fff;
+    height:40px;
+}
+
+/* Đảm bảo card ở giữa màn hình và phóng to */
+.card {
+    width: 100%; /* Đặt chiều rộng cho toàn bộ */
+    max-width: 1200px; /* Giới hạn chiều rộng tối đa */
+    max-height: 1200px;
+    border-radius: 10px; /* Làm bo góc mềm hơn */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+}
+
+.social-list {
+    padding: 0;
+    list-style: none;
+}
+
+.social-list li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.social-list li a {
+    color: #000;
+    font-size: 24px;
+    text-decoration: none;
+}

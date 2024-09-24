@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Sensor</title>
+    <link th:href="@{/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style_table.css}">
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm bg-light navbar-light">
+        <div class="container-fluid">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/index}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/history}">Action History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/dataSensor}">Data Sensor</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/profile}">Profile</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container mt-5">
+    <main id="main" class="main">
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">Data Sensor</h2>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="row">
+                                        <div class="col-lg-1">
+                                            <select id="pageSize" name="size" onchange="changePageSize()">
+                                                <option value="5" th:selected="${size == 5}">5</option>
+                                                <option value="10" th:selected="${size == 10}">10</option>
+                                                <option value="15" th:selected="${size == 15}">15</option>
+                                                <option value="-1" th:selected="${size == -1}">All</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h5>Mục trên mỗi trang</h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Giao diện tìm kiếm -->
+                                <div class="col-lg-6">
+                                    <div class="row">
+                                        <div class="col-lg-4"></div>
+                                        <div class="col-lg-3">
+                                            <select class="form-select" id="sensorType" name="sensorType" onchange=changeSensorType()>
+                                                <option value="all" th:selected="${sensorType == 'all'}">Tất cả</option>
+                                                <option value="temp" th:selected="${sensorType == 'temp'}">Nhiệt độ</option>
+                                                <option value="light" th:selected="${sensorType == 'light'}">Ánh sáng</option>
+                                                <option value="hum" th:selected="${sensorType == 'hum'}">Độ ẩm</option>
+                                                <option value="time" th:selected="${sensorType == 'time'}">Thời gian</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="Tìm kiếm..." th:value="${searchKeyword}" onkeyup="searchSensorData()">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <table class="table datatable">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <a th:href="@{/dataSensor(sortField='id', sortDir=${sortDir == 'asc' ? 'desc' : 'asc'}, page=${currentPage}, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}">
+                                            ID
+                                            <i class="bi" th:classappend="${sortField == 'id' ? (sortDir == 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''}"></i>
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a th:href="@{/dataSensor(sortField='temperature', sortDir=${sortDir == 'asc' ? 'desc' : 'asc'}, page=${currentPage}, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}">
+                                            Nhiệt Độ
+                                            <i class="bi" th:classappend="${sortField == 'temperature' ? (sortDir == 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''}"></i>
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a th:href="@{/dataSensor(sortField='light', sortDir=${sortDir == 'asc' ? 'desc' : 'asc'}, page=${currentPage}, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}">
+                                            Ánh Sáng
+                                            <i class="bi" th:classappend="${sortField == 'light' ? (sortDir == 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''}"></i>
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a th:href="@{/dataSensor(sortField='humidity', sortDir=${sortDir == 'asc' ? 'desc' : 'asc'}, page=${currentPage}, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}">
+                                            Độ Ẩm
+                                            <i class="bi" th:classappend="${sortField == 'humidity' ? (sortDir == 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''}"></i>
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a th:href="@{/dataSensor(sortField='timestamp', sortDir=${sortDir == 'asc' ? 'desc' : 'asc'}, page=${currentPage}, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}">
+                                            Thời Gian
+                                            <i class="bi" th:classappend="${sortField == 'timestamp' ? (sortDir == 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''}"></i>
+                                        </a>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id = "tableBody">
+                                <tr th:if="${sensorDataList.isEmpty()}">
+                                    <td colspan="5" class="text-center" style="color: gray; font-style: italic;">
+                                        Không tìm thấy kết quả phù hợp.
+                                    </td>
+                                </tr>
+                                <tr th:each="data : ${sensorDataList}">
+                                    <td th:text="${data.id}"></td>
+                                    <td th:text="${data.temperature} + '°C'"></td>
+                                    <td th:text="${data.light} + ' Lux'"></td>
+                                    <td th:text="${data.humidity} + '%'"></td>
+                                    <td th:text="${#strings.replace(data.timestamp.toString(), 'T', ' ')}"></td>
+
+
+                                </tr>
+                                </tbody>
+                            </table>
+
+
+                            <ul class="pagination justify-content-center" th:if="${totalPages > 1}">
+                                <!-- Nút quay lại trang trước -->
+                                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                                    <a class="page-link" th:href="@{/dataSensor(page=${currentPage - 1}, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+
+                                <!-- Hiển thị trang đầu tiên -->
+                                <li class="page-item" th:classappend="${currentPage == 0} ? 'active'">
+                                    <a class="page-link" th:href="@{/dataSensor(page=0, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}">1</a>
+                                </li>
+
+                                <!-- Nút "..." phía trước nếu ở sau trang 2 và có hơn 3 trang -->
+                                <li class="page-item dropdown" th:if="${currentPage > 2}">
+                                    <a class="page-link dropdown-toggle" href="#" id="prevDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        ...
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="prevDropdown">
+                                        <li th:each="i : ${#numbers.sequence(1, currentPage - 2)}">
+                                            <a class="dropdown-item" th:href="@{/dataSensor(page=${i}, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}"
+                                               th:text="${i + 1}">1</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <!-- Hiển thị các trang lân cận (chỉ nếu có nhiều hơn 2 trang) -->
+                                <li class="page-item" th:each="i : ${#numbers.sequence(
+                                  currentPage - 1 > 1 ? currentPage - 1 : 1,
+                                  currentPage + 1 < totalPages - 2 ? currentPage + 1 : totalPages - 2)}"
+                                    th:if="${totalPages > 2}"
+                                    th:classappend="${currentPage == i} ? 'active'">
+                                    <a class="page-link" th:href="@{/dataSensor(page=${i}, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}" th:text="${i + 1}">1</a>
+                                </li>
+
+                                <!-- Nút "..." phía sau nếu còn nhiều trang (và có hơn 3 trang) -->
+                                <li class="page-item dropdown" th:if="${currentPage < totalPages - 3}">
+                                    <a class="page-link dropdown-toggle" href="#" id="nextDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        ...
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="nextDropdown">
+                                        <li th:each="i : ${#numbers.sequence(currentPage + 2, totalPages - 2)}">
+                                            <a class="dropdown-item" th:href="@{/dataSensor(page=${i}, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}"
+                                               th:text="${i + 1}">1</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <!-- Hiển thị trang cuối cùng -->
+                                <li class="page-item" th:if="${totalPages > 1}" th:classappend="${currentPage == totalPages - 1} ? 'active'">
+                                    <a class="page-link" th:href="@{/dataSensor(page=${totalPages - 1}, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}" th:text="${totalPages}"></a>
+                                </li>
+
+                                <!-- Nút sang trang sau -->
+                                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                                    <a class="page-link" th:href="@{/dataSensor(page=${currentPage + 1}, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <!-- Khi chỉ có 1 trang thì chỉ hiện trang 1 -->
+                            <ul class="pagination justify-content-center" th:if="${totalPages == 1}">
+                                <li class="page-item active">
+                                    <a class="page-link">1</a>
+                                </li>
+                            </ul>
+
+                            <ul class="pagination justify-content-center" th:if="${totalPages == 0}">
+                            </ul>
+
+                        </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center" id="back-to-top">
+    <i class="bi bi-arrow-up-short"></i>
+</a>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<!--<script th:src="@{/js/simple-datatables.js}"></script>-->
+<script th:src="@{/js/tinymce.min.js}"></script>
+<script th:src="@{/js/script_table.js}"></script>
+</body>
+
+</html>

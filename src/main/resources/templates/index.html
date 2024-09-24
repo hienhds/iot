@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashBoard</title>
+    <link th:href="@{https://fonts.gstatic.com}" rel="preconnect">
+    <link th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i}" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+
+    <link th:href="@{/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style_index.css}">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Di chuyển đây xuống cuối -->
+    <script th:src="@{/js/script_index.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/mqttws31.min.js"></script>
+    <script src="https://unpkg.com/paho-mqtt/mqttws31.js"></script>
+</head>
+
+
+<body>
+
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+    <div class="container-fluid">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link active" th:href="@{/index}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/history}">Action History</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/dataSensor}">Data Sensor</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/profile}">Profile</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container mt-5 text-center web-grid">
+    <div class="row ">
+        <div class="col-md-4 mb-5 test">
+            <div class="card img-fluid">
+                <img src="image/mat.jpg" class="card-img-top" alt="">
+                <div class="card-img-overlay">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-6">
+                                <h1>Nhiệt độ</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div id="temperature-icon" class="temp-icon">
+                                    <img id="temp-icon-img" src="image/icon_lanh.jpg" alt="Temperature Icon">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h4 id="temperature" class="temp-normal">Đang tải ...</h4>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="temperature-bar">
+                                                <div id="temperature-progress" class="progress"></div>
+                                                <div class="icon" id = "icon-progress">
+                                                    <i class="fas fa-thermometer-half" ></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-5">
+            <div class="card img-fluid">
+                <img src="image/light.jpg" class="card-img-top" alt="">
+                <div class="card-img-overlay">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-9">
+                                <h1>Ánh Sáng</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div id="light-icon" class="li-icon">
+                                    <img id="li-icon-img" src="image/icon_toi.jpg" alt="light Icon">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h4 id="light" class="li-normal">Đang tải...</h4>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="light-bar">
+                                                <div id="light-progress" class="light-progress"></div>
+                                                <div class="light-icon" id = "light-icon-progress">
+                                                    <i class="fas fa-sun" ></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-5">
+            <div class="card img-fluid">
+                <img src="image/doam.jpg" class="card-img-top" alt="">
+                <div class="card-img-overlay">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-6">
+                                <h1>Độ Ẩm</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div id="humidity-icon" class="hum-icon">
+                                    <img id="hum-icon-img" src="image/icon_kho.png" alt="humidity Icon">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h4 id="humidity" class="hum-normal">Đang tải...</h4>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="humidity-bar">
+                                                <div id="humidity-progress" class="humidity-progress"></div>
+                                                <div class="humidity-icon" id = "humidity-icon-progress">
+                                                    <i class="fas fa-tint" ></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 bg-light mb-5">
+            <div class="container">
+                <h1 class="card-title">Biểu Đồ</h1>
+                <div id="reportsChart"></div>
+            </div>
+        </div>
+
+        <div class="col-md-6 control mb-5">
+            <div class="card controller">
+                <div class="card-body">
+                    <div class="card-tittle">
+                        <h1>Điều Khiển</h1>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <img src="image/lamp_off.png" alt="Den" class="img-fluid-control" id="lamp">
+                            </div>
+                            <div class="col-6">
+                                <img src="image/off.png" alt="Off" class="img-fluid-control control-img" data-state="off" id="lamp-control">
+                            </div>
+
+                            <div class="col-6">
+                                <img src="image/air_con_off.png" alt="Dieu Hoa" class="img-fluid-control" id="air-con">
+                            </div>
+                            <div class="col-6">
+                                <img src="image/off.png" alt="Off" class="img-fluid-control control-img" data-state="off" id="air-con-control">
+                            </div>
+                            <div class="col-6">
+                                <img src="image/fan_off.png" alt="Quat Tinh" class="img-fluid-control" id="fan">
+                            </div>
+                            <div class="col-6">
+                                <img src="image/off.png" alt="Off" class="img-fluid-control control-img" data-state="off" id="fan-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center" id="back-to-top">
+    <i class="bi bi-arrow-up-short"></i>
+</a>
+<script th:src="@{/js/apexcharts.min.js}"></script>
+<script th:src="@{/js/chart.js/chart.umd.js}"></script>
+<script th:src="@{/js/echarts/echarts.min.js}"></script>
+</body>
+
+</html>
