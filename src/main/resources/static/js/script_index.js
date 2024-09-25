@@ -14,6 +14,43 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log('Connected: ' + frame);
 
         // Đăng ký nhận dữ liệu cảm biến
+        // stompClient.subscribe('/topic/sensorData', function (data) {
+        //     const sensorData = JSON.parse(data.body);
+        //
+        //     // Cập nhật dữ liệu nhiệt độ, độ ẩm, ánh sáng
+        //     temperature = sensorData.temperature;
+        //     document.getElementById("temperature").innerHTML = `${temperature}\u00B0C`;
+        //     updateProgressBar();
+        //
+        //     humidity = sensorData.humidity;
+        //     document.getElementById('humidity').innerHTML = `${humidity}%`;
+        //     updateProgressBarhumidity();
+        //
+        //     light = sensorData.light;
+        //     document.getElementById("light").innerHTML = `${light} lux`;
+        //     updateProgressBarLight();
+        //
+        //
+        //     function checkLightLevel(light) {
+        //         console.log(okkkk)
+        //         if (light < 500 && okkkk === "off") {
+        //             okkkk = "on"; // Cập nhật trạng thái
+        //             alert("ánh sáng, bật đèn");
+        //             stompClient.send(`/app/lampControl`, {}, "on");
+        //         } else if (light >= 3000 && okkkk === "on") {
+        //             okkkk = "off"; // Cập nhật trạng thái khi ánh sáng đủ
+        //             alert("ánh sáng mạnh, tắt đèn");
+        //             stompClient.send(`/app/lampControl`, {}, "off");
+        //         }
+        //     }
+        //     // checkLightLevel(sensorData.light);
+        //
+        //
+        //
+        // }, function (error) {
+        //     console.error('STOMP error: ' + error);
+        // });
+
         stompClient.subscribe('/topic/sensorData', function (data) {
             const sensorData = JSON.parse(data.body);
 
@@ -30,26 +67,32 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("light").innerHTML = `${light} lux`;
             updateProgressBarLight();
 
-
-            function checkLightLevel(light) {
-                console.log(okkkk)
-                if (light < 500 && okkkk === "off") {
-                    okkkk = "on"; // Cập nhật trạng thái
-                    alert("ánh sáng, bật đèn");
-                    stompClient.send(`/app/lampControl`, {}, "on");
-                } else if (light >= 3000 && okkkk === "on") {
-                    okkkk = "off"; // Cập nhật trạng thái khi ánh sáng đủ
-                    alert("ánh sáng mạnh, tắt đèn");
-                    stompClient.send(`/app/lampControl`, {}, "off");
-                }
-            }
-            // checkLightLevel(sensorData.light);
-
-
-
+            // Kiểm tra và điều chỉnh đèn theo ánh sáng
+            // checkLightLevel(light);
         }, function (error) {
             console.error('STOMP error: ' + error);
         });
+
+// Gửi yêu cầu nhận dữ liệu từ server
+        function requestSensorData() {
+            stompClient.send("/app/requestSensorData", {});
+        }
+
+// Gửi yêu cầu lấy dữ liệu mới nhất qua WebSocket mỗi 5 giây
+        setInterval(requestSensorData, 2000);
+
+// Hàm kiểm tra mức ánh sáng và điều chỉnh đèn
+        function checkLightLevel(light) {
+            if (light < 500 && okkkk === "off") {
+                okkkk = "on"; // Cập nhật trạng thái
+                alert("Ánh sáng thấp, bật đèn");
+                stompClient.send(`/app/lampControl`, {}, "on");
+            } else if (light >= 3000 && okkkk === "on") {
+                okkkk = "off"; // Cập nhật trạng thái khi ánh sáng đủ
+                alert("Ánh sáng mạnh, tắt đèn");
+                stompClient.send(`/app/lampControl`, {}, "off");
+            }
+        }
 
         // Đăng ký nhận phản hồi từ đèn khi có thay đổi trạng thái
         stompClient.subscribe('/topic/lampStatus', function (message) {
