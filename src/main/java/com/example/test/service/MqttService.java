@@ -116,7 +116,7 @@ public class MqttService {
                         sensorData.setTimestamp(LocalDateTime.now());
 
                         // Gửi dữ liệu qua WebSocket
-                        messagingTemplate.convertAndSend("/topic/sensorData", sensorData);
+//                        messagingTemplate.convertAndSend("/topic/sensorData", sensorData);
                         // Kiểm tra sự thay đổi đáng kể của từng loại dữ liệu
                         boolean isSignificantTempChange = Math.abs(temperature - lastTemp) > TEMP_THRESHOLD;
                         boolean isSignificantHumChange = Math.abs(humidity - lastHum) > HUM_THRESHOLD;
