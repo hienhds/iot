@@ -55,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function() {
         stompClient.subscribe('/topic/lampStatus', function (message) {
             const state = message.body;
             okkkk = state
-            // Cập nhật trạng thái và hình ảnh dựa trên phản hồi từ server
             if (state === "on") {
                 document.getElementById("lamp").src = "image/lamp_on.png"; // Hình ảnh đèn sáng
                 document.getElementById("lamp-control").src = "image/on.png"; // Hình ảnh nút điều khiển sáng
