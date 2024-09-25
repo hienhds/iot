@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let temperature;
     let humidity;
     let light;
+    let okkkk = "off";
 
 // Kết nối STOMP
     stompClient.connect({}, function (frame) {
@@ -28,6 +29,24 @@ document.addEventListener("DOMContentLoaded", function() {
             light = sensorData.light;
             document.getElementById("light").innerHTML = `${light} lux`;
             updateProgressBarLight();
+
+
+            function checkLightLevel(light) {
+                console.log(okkkk)
+                if (light < 500 && okkkk === "off") {
+                    okkkk = "on"; // Cập nhật trạng thái
+                    alert("ánh sáng, bật đèn");
+                    stompClient.send(`/app/lampControl`, {}, "on");
+                } else if (light >= 3000 && okkkk === "on") {
+                    okkkk = "off"; // Cập nhật trạng thái khi ánh sáng đủ
+                    alert("ánh sáng mạnh, tắt đèn");
+                    stompClient.send(`/app/lampControl`, {}, "off");
+                }
+            }
+            // checkLightLevel(sensorData.light);
+
+
+
         }, function (error) {
             console.error('STOMP error: ' + error);
         });
@@ -35,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Đăng ký nhận phản hồi từ đèn khi có thay đổi trạng thái
         stompClient.subscribe('/topic/lampStatus', function (message) {
             const state = message.body;
-
+            okkkk = state
             // Cập nhật trạng thái và hình ảnh dựa trên phản hồi từ server
             if (state === "on") {
                 document.getElementById("lamp").src = "image/lamp_on.png"; // Hình ảnh đèn sáng
