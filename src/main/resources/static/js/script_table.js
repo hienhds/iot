@@ -80,42 +80,50 @@ function changeSensorType() {
     window.location.href = `/dataSensor?sensorType=${sensorType}&searchKeyword=${encodeURIComponent(searchKeyword)}&size=${pageSize}&page=0&sortField=${sortField}&sortDir=${sortDir}`;
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
 
-function searchDeviceHistory() {
-    var keyword = document.getElementById('searchKeyword').value;
-    var sensorType = document.getElementById('sensorType').value;
-    var pageSize = document.getElementById('pageSize').value;
+    function fetchBuiCount() {
+        // Gọi API để lấy số lần độ bụi > 80
+        fetch(`/bui-count`)
+            .then(response => response.json())
+            .then(count => {
+                // Hiển thị số lần độ bụi > 80
+                document.getElementById("bui-count").innerHTML = `${count}`;
+            })
+            .catch(error => {
+                console.error('Error fetching bui count:', error);
+                document.getElementById('bui-count').textContent = 'N/A'; // Hiển thị 'N/A' nếu có lỗi
+            });
+    }
 
-    var sortField = new URLSearchParams(window.location.search).get('sortField') || 'id';
-    var sortDir = new URLSearchParams(window.location.search).get('sortDir') || 'asc';
+    function fetchTopBui() {
+        fetch('/bui-list-data') // Gọi API để lấy danh sách độ bụi cao nhất
+            .then(response => response.json()) // Chuyển đổi phản hồi thành JSON
+            .then(data => {
+                const buiListElement = document.getElementById('bui-list');
+                buiListElement.innerHTML = ''; // Xóa danh sách cũ
 
-    // Tạo URL với từ khóa tìm kiếm và các tham số khác
-    var url = '/dataSensor?searchKeyword=' + encodeURIComponent(keyword) +
-        '&sensorType=' + encodeURIComponent(sensorType) +
-        '&size=' + encodeURIComponent(pageSize) +
-        '&sortField=' + encodeURIComponent(sortField) +
-        '&sortDir=' + encodeURIComponent(sortDir);
+                // Giả sử data là mảng chứa các giá trị độ bụi
+                data.forEach(bui => {
+                    const li = document.createElement('li'); // Tạo một phần tử <li>
+                    li.textContent = `Độ bụi: ${bui}`; // Hiển thị độ bụi
+                    buiListElement.appendChild(li); // Thêm <li> vào <ul>
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching top bui list:', error); // In lỗi nếu có
+            });
+    }
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(xhr.responseText, 'text/html');
+    fetchTopBui();
 
-            var newTableBody = doc.querySelector('.datatable tbody');
-            if (newTableBody) {
-                document.querySelector('.datatable tbody').innerHTML = newTableBody.innerHTML;
-            }
+    // Gọi hàm để cập nhật dữ liệu ban đầu khi trang được tải
+    fetchBuiCount();
 
-            var newPagination = doc.querySelector('.pagination');
-            if (newPagination) {
-                document.querySelector('.pagination').innerHTML = newPagination.innerHTML;
-            }
-        }
-    };
-    xhr.send();
-}
+    setInterval(fetchBuiCount, 2000);
+    setInterval(fetchTopBui, 2000);
+});
 
 
 

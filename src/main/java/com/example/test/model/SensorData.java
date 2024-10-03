@@ -23,8 +23,13 @@ public class SensorData {
     @Column(name = "humidity")
     private Double humidity;
 
+    @Column(name = "bui")
+    private int bui;
+
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
+
+
 
 
 }

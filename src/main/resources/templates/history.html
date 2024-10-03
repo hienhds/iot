@@ -8,6 +8,8 @@
   <title>Action History</title>
 
   <link th:href="@{/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
   <link rel="stylesheet" th:href="@{/css/style_table.css}">
 </head>
@@ -58,6 +60,13 @@
                     </div>
                     <div class="col-lg-6">
                       <h5>Mục trên mỗi trang</h5>
+                    </div>
+                    <div class="col-lg-5">
+                      <div>
+                        <p>Số lần Quạt bật: <span id="fanOnCount">0</span></p>
+                        <p>Số lần Quạt tắt: <span id="fanOffCount">0</span></p>
+                      </div>
+
                     </div>
                   </div>
                 </div>

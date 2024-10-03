@@ -9,9 +9,14 @@ import org.eclipse.paho.client.mqttv3.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +39,8 @@ public class MqttService {
     private double lastHum = 0;
     private double lastLight = 0;
 
+    private int lastBui = 0;
+
     private double tempSum = 0;
     private double humSum = 0;
     private double lightSum = 0;
@@ -53,7 +60,9 @@ public class MqttService {
         mqttClient.subscribe("esp32/lamp/status");
         mqttClient.subscribe("esp32/air-con/status");
         mqttClient.subscribe("esp32/fan/status");
+        mqttClient.subscribe("esp32/all-devices/status");
         mqttClient.setCallback(new MqttCallback() {
+
             @Override
             public void connectionLost(Throwable throwable) {
                 System.out.println("Connection lost: " + throwable.getMessage());
@@ -96,6 +105,31 @@ public class MqttService {
                     deviceHistoryRepository.save(deviceHistory);
                 }
 
+                if(topic.equals("esp32/all-devices/status")) {
+                    String state = new String(message.getPayload());
+                    messagingTemplate.convertAndSend("/topic/allStatus", state);
+                    System.out.println("Nhan dược phản hif của 3 thiết bị " + state);
+                    DeviceHistory deviceHistoryFan = new DeviceHistory();
+                    deviceHistoryFan.setDevice_name("Quạt");
+                    deviceHistoryFan.setAction(state);
+                    deviceHistoryFan.setTimestamp(LocalDateTime.now());
+                    deviceHistoryRepository.save(deviceHistoryFan);
+
+                    DeviceHistory deviceHistoryLamp = new DeviceHistory();
+                    deviceHistoryLamp.setDevice_name("Đèn");
+                    deviceHistoryLamp.setAction(state);
+                    deviceHistoryLamp.setTimestamp(LocalDateTime.now());
+                    deviceHistoryRepository.save(deviceHistoryLamp);
+
+                    DeviceHistory deviceHistoryAirCon = new DeviceHistory();
+                    deviceHistoryAirCon.setDevice_name("Điều Hòa");
+                    deviceHistoryAirCon.setAction(state);
+                    deviceHistoryAirCon.setTimestamp(LocalDateTime.now());
+                    deviceHistoryRepository.save(deviceHistoryAirCon);
+
+
+                }
+
                 if (topic.equals("esp32/data")) {
 
                     String payload = new String(message.getPayload());
@@ -113,17 +147,25 @@ public class MqttService {
                         sensorData.setTemperature(temperature);
                         sensorData.setHumidity(humidity);
                         sensorData.setLight(lightIntensity);
+                        Random random = new Random();
+
+                        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+                        Runnable task = () -> {
+                            lastBui = random.nextInt(0, 101);
+                        };
+                        scheduler.scheduleAtFixedRate(task, 0, 1, TimeUnit.SECONDS);
+                        sensorData.setBui(lastBui);
                         sensorData.setTimestamp(LocalDateTime.now());
 
                         // Gửi dữ liệu qua WebSocket
-//                        messagingTemplate.convertAndSend("/topic/sensorData", sensorData);
+                        messagingTemplate.convertAndSend("/topic/sensorData", sensorData);
                         // Kiểm tra sự thay đổi đáng kể của từng loại dữ liệu
                         boolean isSignificantTempChange = Math.abs(temperature - lastTemp) > TEMP_THRESHOLD;
                         boolean isSignificantHumChange = Math.abs(humidity - lastHum) > HUM_THRESHOLD;
                         boolean isSignificantLightChange = Math.abs(lightIntensity - lastLight) > LIGHT_THRESHOLD;
 
                         // Lưu dữ liệu khi có bất kỳ sự thay đổi đáng kể nào
-                        if (isSignificantTempChange || isSignificantHumChange || isSignificantLightChange) {
+                        if (isSignificantTempChange || isSignificantHumChange || isSignificantLightChange || lastBui > 80) {
                             saveData(temperature, humidity, lightIntensity);
                         } else {
                             // Lưu giá trị để tính trung bình
@@ -133,7 +175,7 @@ public class MqttService {
                             dataCount++;
 
                             // Kiểm tra nếu đã qua 15 phút
-                            if (lastSaveTime.plusMinutes(SAVE_INTERVAL_MINUTES).isBefore(LocalDateTime.now())) {
+                            if (lastSaveTime.plusMinutes(SAVE_INTERVAL_MINUTES).isBefore(LocalDateTime.now()) || lastBui > 80) {
                                 saveAverageData();
                             }
                         }
@@ -158,6 +200,7 @@ public class MqttService {
         sensorData.setTemperature(temperature);
         sensorData.setHumidity(humidity);
         sensorData.setLight(lightIntensity);
+        sensorData.setBui(lastBui);
         sensorData.setTimestamp(LocalDateTime.now());
         dataSensorRepository.save(sensorData);
 
@@ -200,6 +243,16 @@ public class MqttService {
             mqttClient.publish(topic, mqttMessage);
             System.out.println("Published message to topic: " + topic + ", command: " + command);
         }catch (MqttException e){
+            e.printStackTrace();
+        }
+    }
+    public void pulishAllControl(String status){
+        try{
+            String topic = "esp32/all-devices";
+            MqttMessage mqttMessage = new MqttMessage(status.getBytes());
+            mqttClient.publish(topic, mqttMessage);
+        }
+        catch (MqttException e){
             e.printStackTrace();
         }
     }

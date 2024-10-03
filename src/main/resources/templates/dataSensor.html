@@ -55,7 +55,17 @@
                                         <div class="col-lg-6">
                                             <h5>Mục trên mỗi trang</h5>
                                         </div>
+                                        <div class="col-lg-5">
+                                            Số lần độ bụi > 80: <span id="bui-count">Đang tải...</span>
+                                        </div>
                                     </div>
+<!--                                    <div class="row">-->
+<!--                                        <h6>Danh Sach 5 Do Bui Cao Nhat Trong Ngay</h6>-->
+<!--                                        <div class="col-lg-1"></div>-->
+<!--                                        <div class="col-lg-3">-->
+<!--                                            <ul id="bui-list"></ul>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </div>
 
                                 <!-- Giao diện tìm kiếm -->
@@ -68,6 +78,7 @@
                                                 <option value="temp" th:selected="${sensorType == 'temp'}">Nhiệt độ</option>
                                                 <option value="light" th:selected="${sensorType == 'light'}">Ánh sáng</option>
                                                 <option value="hum" th:selected="${sensorType == 'hum'}">Độ ẩm</option>
+                                                <option value="time" th:selected="${sensorType == 'bui'}">Độ Bụi</option>
                                                 <option value="time" th:selected="${sensorType == 'time'}">Thời gian</option>
                                             </select>
                                         </div>
@@ -107,6 +118,12 @@
                                         </a>
                                     </th>
                                     <th>
+                                        <a th:href="@{/dataSensor(sortField='bui', sortDir=${sortDir == 'asc' ? 'desc' : 'asc'}, page=${currentPage}, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}">
+                                            Độ Bụi
+                                            <i class="bi" th:classappend="${sortField == 'bui' ? (sortDir == 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''}"></i>
+                                        </a>
+                                    </th>
+                                    <th>
                                         <a th:href="@{/dataSensor(sortField='timestamp', sortDir=${sortDir == 'asc' ? 'desc' : 'asc'}, page=${currentPage}, size=${size}, searchKeyword=${searchKeyword}, sensorType=${sensorType})}">
                                             Thời Gian
                                             <i class="bi" th:classappend="${sortField == 'timestamp' ? (sortDir == 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''}"></i>
@@ -125,6 +142,7 @@
                                     <td th:text="${data.temperature} + '°C'"></td>
                                     <td th:text="${data.light} + ' Lux'"></td>
                                     <td th:text="${data.humidity} + '%'"></td>
+                                    <td th:text="${data.bui}"></td>
                                     <td th:text="${#strings.replace(data.timestamp.toString(), 'T', ' ')}"></td>
 
 

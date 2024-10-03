@@ -1,3 +1,22 @@
+document.addEventListener("DOMContentLoaded", () => {
+    function fetchFanActionCounts() {
+        fetch('/fan-action-counts?deviceName=Quạt')
+            .then(response => response.json())
+            .then(data => {
+                // Cập nhật UI với dữ liệu nhận được
+                document.getElementById('fanOnCount').innerText = data.on || 0;
+                document.getElementById('fanOffCount').innerText = data.off || 0;
+            })
+            .catch(error => console.error('Error fetching fan action counts:', error));
+    }
+
+    // Lấy dữ liệu ngay khi tải trang
+    fetchFanActionCounts();
+
+    // Lặp lại việc lấy dữ liệu sau mỗi 5 giây (5000 milliseconds)
+    setInterval(fetchFanActionCounts, 2000);
+});
+
 function searchDeviceHistory() {
     var keyword = document.getElementById('searchKeyword').value;
     var pageSize = document.getElementById('pageSize').value;
@@ -64,6 +83,7 @@ function changePageSize() {
     // Chuyển hướng với các tham số cần thiết
     window.location.href = `/history?size=${size}&page=0&searchKeyword=${encodeURIComponent(searchKeyword)}&sortField=${sortField}&sortDir=${sortDir}`;
 }
+
 
 
 

@@ -54,6 +54,16 @@ public class HomeController {
         }
     }
 
+    @MessageMapping("/allControl")
+    public void allControl(String message){
+        if(message.equals("on")){
+            mqttService.pulishAllControl("on");
+        }
+        else if (message.equals("off")){
+            mqttService.pulishAllControl("off");
+        }
+    }
+
     @RequestMapping("index")
     public String showPage(){
         return "index";

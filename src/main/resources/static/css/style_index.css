@@ -1,10 +1,3 @@
-/* .centered-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-} */
-
 body {
     background-image: url('../image/bg1.jpg');
     background-size: cover;
@@ -53,9 +46,7 @@ body {
 
 .col-md-6 {
     border-radius: 5px;
-    /* Bo góc 15px */
     overflow: hidden;
-    /* Đảm bảo nội dung bên trong cũng tuân theo bo góc */
 }
 
 .img-fluid-control {
@@ -92,7 +83,6 @@ body {
     right: 0;
     bottom: 0;
     color: black;
-    background: rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -103,37 +93,35 @@ body {
 }
 
 
-
 .card-img-top {
     opacity: 0.4;
     transition: opacity 0.5s ease-in-out;
 }
 
-
 .col-6 {
     display: flex;
-    align-items: center;
-    /* Căn giữa theo chiều dọc */
-    justify-content: center;
-    /* Căn giữa theo chiều ngang */
+    align-items: center;  /* Căn giữa theo chiều dọc */
+    justify-content: center;  /* Căn giữa theo chiều ngang */
 }
 
-#temperature-icon {
-    margin-right: 5px;
+.icon-img img {
+    transition: all 0.5s ease;
+    width: 100%;  /* Điều chỉnh kích thước icon theo chiều rộng màn hình */
+    height: auto;  /* Giữ tỉ lệ gốc của hình ảnh */
 }
 
-#temperature {
-    margin-left: 5px;
+.value {
     transition: color 0.5s ease-in-out;
+    font-size: 230%;  /* Điều chỉnh kích thước chữ theo chiều rộng màn hình */
+    white-space: nowrap;
 }
 
-.temperature-bar {
+.bar {
     position: relative;
     width: 90%;
     height: 20px;
     border-radius: 10px;
-    background: #ddd; 
-    margin: 0 auto;
+    background: #b6babf;
     transition: width 0.5s ease;
 }
 
@@ -143,199 +131,12 @@ body {
     border-radius: 10px;
     transition: width 0.5s ease, background-color 0.5s ease; /* Hiệu ứng mượt mà khi thay đổi */
 }
-.temperature-bar .icon {
-    /* color: black; */
+
+.icon-progress {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     font-size: x-large;
-
-}
-.temp-normal {
-    font-size: 2vw;
-    /* Điều chỉnh kích thước chữ theo chiều rộng màn hình */
-    white-space: nowrap;
-    /* Ngăn chữ xuống dòng */
-}
-
-.temp-icon img {
-    width: 10vw;
-    /* Điều chỉnh kích thước icon theo chiều rộng màn hình */
-    height: auto;
-    /* Giữ tỉ lệ gốc của hình ảnh */
-}
-
-/* Media queries cho màn hình nhỏ hơn */
-@media (max-width: 768px) {
-    .temp-normal {
-        font-size: 4vw;
-        /* Điều chỉnh kích thước chữ cho màn hình nhỏ hơn */
-    }
-
-    .temp-icon img {
-        width: 15vw;
-        /* Điều chỉnh kích thước icon cho màn hình nhỏ hơn */
-    }
-}
-
-/* Media queries cho màn hình rất nhỏ */
-@media (max-width: 480px) {
-    .temp-normal {
-        font-size: 5vw;
-        /* Điều chỉnh kích thước chữ cho màn hình rất nhỏ */
-    }
-
-    .temp-icon img {
-        width: 20vw;
-        /* Điều chỉnh kích thước icon cho màn hình rất nhỏ */
-    }
-}
-
-#light-icon {
-    margin-right: 5px;
-}
-
-#light {
-    margin-left: 5px;
-    transition: color 0.5s ease-in-out;
-}
-
-.light-bar {
-    position: relative;
-    width: 90%;
-    height: 20px;
-    border-radius: 10px;
-    background: #ddd; 
-    margin: 0 auto;
-    transition: width 0.5s ease;
-}
-
-.light-progress {
-    height: 100%;
-    width: 0; /* Ban đầu thanh tiến trình là 0 */
-    border-radius: 10px;
-    transition: width 0.5s ease, background-color 0.5s ease; /* Hiệu ứng mượt mà khi thay đổi */
-}
-.light-icon {
-    /* color: black; */
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: x-large;
-
-}
-.li-normal {
-    font-size: 2vw;
-    /* Điều chỉnh kích thước chữ theo chiều rộng màn hình */
-    white-space: nowrap;
-    /* Ngăn chữ xuống dòng */
-}
-
-.li-icon img {
-    width: 10vw;
-    /* Điều chỉnh kích thước icon theo chiều rộng màn hình */
-    height: auto;
-    /* Giữ tỉ lệ gốc của hình ảnh */
-}
-
-/* Media queries cho màn hình nhỏ hơn */
-@media (max-width: 768px) {
-    .li-normal {
-        font-size: 4vw;
-        /* Điều chỉnh kích thước chữ cho màn hình nhỏ hơn */
-    }
-
-    .li-icon img {
-        width: 15vw;
-        /* Điều chỉnh kích thước icon cho màn hình nhỏ hơn */
-    }
-}
-
-/* Media queries cho màn hình rất nhỏ */
-@media (max-width: 480px) {
-    .li-normal {
-        font-size: 5vw;
-        /* Điều chỉnh kích thước chữ cho màn hình rất nhỏ */
-    }
-
-    .li-icon img {
-        width: 20vw;
-        /* Điều chỉnh kích thước icon cho màn hình rất nhỏ */
-    }
-}
-
-
-#humidity-icon {
-    margin-right: 5px;
-}
-
-#humidity {
-    margin-left: 5px;
-    transition: color 0.5s ease-in-out;
-}
-
-.humidity-bar {
-    position: relative;
-    width: 90%;
-    height: 20px;
-    border-radius: 10px;
-    background: #ddd; 
-    margin: 0 auto;
-    transition: width 0.5s ease;
-}
-
-.humidity-progress {
-    height: 100%;
-    width: 0; /* Ban đầu thanh tiến trình là 0 */
-    border-radius: 10px;
-    transition: width 0.5s ease, background-color 0.5s ease; /* Hiệu ứng mượt mà khi thay đổi */
-}
-.humidity-icon {
-    /* color: black; */
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: x-large;
-
-}
-.hum-normal {
-    font-size: 2vw;
-    /* Điều chỉnh kích thước chữ theo chiều rộng màn hình */
-    white-space: nowrap;
-    /* Ngăn chữ xuống dòng */
-}
-
-.hum-icon img {
-    width: 10vw;
-    /* Điều chỉnh kích thước icon theo chiều rộng màn hình */
-    height: auto;
-    /* Giữ tỉ lệ gốc của hình ảnh */
-}
-
-/* Media queries cho màn hình nhỏ hơn */
-@media (max-width: 768px) {
-    .hum-normal {
-        font-size: 4vw;
-        /* Điều chỉnh kích thước chữ cho màn hình nhỏ hơn */
-    }
-
-    .hum-icon img {
-        width: 15vw;
-        /* Điều chỉnh kích thước icon cho màn hình nhỏ hơn */
-    }
-}
-
-/* Media queries cho màn hình rất nhỏ */
-@media (max-width: 480px) {
-    .hum-normal {
-        font-size: 5vw;
-        /* Điều chỉnh kích thước chữ cho màn hình rất nhỏ */
-    }
-
-    .hum-icon img {
-        width: 20vw;
-        /* Điều chỉnh kích thước icon cho màn hình rất nhỏ */
-    }
 }
 
 /* Định dạng nút Back to Top giống như hình */
@@ -374,12 +175,23 @@ body {
     visibility: visible;
 }
 
-/* Add spinning animation */
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+
+@keyframes blinkRed {
+    0% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: red;
+    }
+    100% {
+        background-color: transparent;
+    }
 }
 
-.spin {
-    animation: spin 2s linear infinite;
+.blink-box {
+    animation: blinkRed 1s infinite; /* Thời gian 1 giây, lặp vô hạn */
+}
+
+.tmp {
+    height: 100%; /* Hoặc chiều cao mà bạn muốn cố định */
 }

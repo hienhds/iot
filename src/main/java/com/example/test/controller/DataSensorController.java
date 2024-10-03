@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -89,5 +90,18 @@ public class DataSensorController {
 
         return "dataSensor";
     }
+    @GetMapping("/bui-count")
+    public ResponseEntity<Long> getBuiCount() {
+        Long count = sensorDataService.countBuiGreaterThan80ByDate();
+        System.out.println(count);
+        return ResponseEntity.ok(count);
 
+    }
+
+    @GetMapping("/bui-list-data")
+    @ResponseBody
+    public List<Integer> getListValueBui(){
+        System.out.println(sensorDataService.listValueBui());
+        return sensorDataService.listValueBui();
+    }
 }

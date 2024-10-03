@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,5 +47,12 @@ public class SensorDataService {
     // Phương thức tìm kiếm theo loại cảm biến không phân trang
     public List<SensorData> searchSensorDataByType(String searchKeyword, String sensorType, Sort sort) {
         return sensorDataRepository.findByKeywordAndSensorType(searchKeyword, sensorType, sort);
+    }
+    public Long countBuiGreaterThan80ByDate() {
+        return sensorDataRepository.countBuiGreaterThan80ByDate();
+    }
+
+    public List<Integer> listValueBui(){
+        return sensorDataRepository.listValueBui();
     }
 }

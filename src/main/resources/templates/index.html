@@ -4,12 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DashBoard</title>
-    <link th:href="@{https://fonts.gstatic.com}" rel="preconnect">
-    <link th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i}" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-
 
     <link th:href="@{/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
     <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}" rel="stylesheet">
@@ -17,7 +14,6 @@
     <link rel="stylesheet" th:href="@{/css/style_index.css}">
     <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 
-    <!-- Di chuyển đây xuống cuối -->
     <script th:src="@{/js/script_index.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/mqttws31.min.js"></script>
     <script src="https://unpkg.com/paho-mqtt/mqttws31.js"></script>
@@ -46,135 +42,150 @@
 </nav>
 <div class="container mt-5 text-center web-grid">
     <div class="row ">
-        <div class="col-md-4 mb-5 test">
+        <div class="col-md-3 mb-5">
             <div class="card img-fluid">
-                <img src="image/mat.jpg" class="card-img-top" alt="">
+                <img src="image/bg-white.jpg" class="card-img-top" alt="">
                 <div class="card-img-overlay">
-                    <div class="container-fluid">
+                    <div class="container-fluid mt-4">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="icon-img">
+                                    <img id="temperature-icon-img" src="image/icon_lanh.png" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mt-4">
+                                <h4 id="temperature-value" class="value">Đang tải...</h4>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-lg-12 ">
+                                <div class="bar">
+                                    <div id="temperature-progress" class="progress"></div>
+                                    <div class="icon-progress" id = "temperature-icon-progress">
+                                        <i class="fas fa-thermometer-half" ></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-5">
+            <div class="card img-fluid">
+                <img src="image/bg-white.jpg" class="card-img-top" alt="">
+                <div class="card-img-overlay">
+                    <div class="container-fluid mt-4">
                         <div class="row">
                             <div class="col-6">
-                                <h1>Nhiệt độ</h1>
+                                <div class="icon-img">
+                                    <img id="light-icon-img" src="image/sun-icon.png" alt="">
+                                </div>
+                            </div>
+                            <div class="col-6 mt-4">
+                                <h4 id="light-value" class="value">Đang tải...</h4>
                             </div>
                         </div>
                     </div>
-                    <div class="container-fluid">
+                    <div class="container-fluid mt-3">
                         <div class="row">
-                            <div class="col-lg-6">
-                                <div id="temperature-icon" class="temp-icon">
-                                    <img id="temp-icon-img" src="image/icon_lanh.jpg" alt="Temperature Icon">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <h4 id="temperature" class="temp-normal">Đang tải ...</h4>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="temperature-bar">
-                                                <div id="temperature-progress" class="progress"></div>
-                                                <div class="icon" id = "icon-progress">
-                                                    <i class="fas fa-thermometer-half" ></i>
-                                                </div>
-                                            </div>
-                                        </div>
+
+                            <div class="col-lg-12">
+                                <div class="bar">
+                                    <div id="light-progress" class="progress"></div>
+                                    <div class="icon-progress" id = "light-icon-progress">
+                                        <i class="fas fa-sun" ></i>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-5">
+        <div class="col-md-3 mb-5">
             <div class="card img-fluid">
-                <img src="image/light.jpg" class="card-img-top" alt="">
+                <img src="image/bg-white.jpg" class="card-img-top" alt="">
                 <div class="card-img-overlay">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-9">
-                                <h1>Ánh Sáng</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div id="light-icon" class="li-icon">
-                                    <img id="li-icon-img" src="image/icon_toi.jpg" alt="light Icon">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <h4 id="light" class="li-normal">Đang tải...</h4>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="light-bar">
-                                                <div id="light-progress" class="light-progress"></div>
-                                                <div class="light-icon" id = "light-icon-progress">
-                                                    <i class="fas fa-sun" ></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-5">
-            <div class="card img-fluid">
-                <img src="image/doam.jpg" class="card-img-top" alt="">
-                <div class="card-img-overlay">
-                    <div class="container-fluid">
+                    <div class="container-fluid mt-4">
                         <div class="row">
                             <div class="col-6">
-                                <h1>Độ Ẩm</h1>
+                                <div class="icon-img">
+                                    <img id="humidity-icon-img" src="image/icon-am.png" alt="">
+                                </div>
+                            </div>
+                            <div class="col-6 mt-4">
+                                <h4 id="humidity-value" class="value">Đang tải...</h4>
                             </div>
                         </div>
                     </div>
-                    <div class="container-fluid">
+                    <div class="container-fluid mt-3">
                         <div class="row">
-                            <div class="col-lg-6">
-                                <div id="humidity-icon" class="hum-icon">
-                                    <img id="hum-icon-img" src="image/icon_kho.png" alt="humidity Icon">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <h4 id="humidity" class="hum-normal">Đang tải...</h4>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="humidity-bar">
-                                                <div id="humidity-progress" class="humidity-progress"></div>
-                                                <div class="humidity-icon" id = "humidity-icon-progress">
-                                                    <i class="fas fa-tint" ></i>
-                                                </div>
-                                            </div>
-                                        </div>
+
+                            <div class="col-lg-12">
+                                <div class="bar">
+                                    <div id="humidity-progress" class="progress"></div>
+                                    <div class="icon-progress" id = "humidity-icon-progress">
+                                        <i class="fas fa-tint" ></i>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 bg-light mb-5">
+        <div class="col-md-3 mb-5" >
+            <div class="card img-fluid" id = "box-bui">
+                <img src="image/bg-white.jpg" class="card-img-top" alt="">
+                <div class="card-img-overlay">
+                    <div class="container-fluid mt-4">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="icon-img">
+                                    <img id="dust-icon-img" src="image/bui1.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="col-6 mt-4">
+                                <h4 id="dust-value" class="value">Đang tải ...</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid mt-3">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="bar">
+                                    <div id="dust-progress" class="progress"></div>
+                                    <div class="icon-progress" id="dust-icon-progress">
+                                        <i class="fas fa-smog"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 bg-light mb-5 tmp">
             <div class="container">
                 <h1 class="card-title">Biểu Đồ</h1>
                 <div id="reportsChart"></div>
             </div>
         </div>
 
-        <div class="col-md-6 control mb-5">
-            <div class="card controller">
+<!--        <div class="col-md-5 bg-light mb-5 tmp">-->
+<!--            <div class="container">-->
+<!--                <h1 class="card-title">Biểu Đồ 2</h1>-->
+<!--                <div id="reportsChart2"></div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class="col-md-6 control mb-5 ">
+            <div class="card controller tmp">
                 <div class="card-body">
                     <div class="card-tittle">
                         <h1>Điều Khiển</h1>
@@ -200,6 +211,12 @@
                             <div class="col-6">
                                 <img src="image/off.png" alt="Off" class="img-fluid-control control-img" data-state="off" id="fan-control">
                             </div>
+<!--                            <div class="col-6">-->
+<!--                                <p>Điều Khiển</p>-->
+<!--                            </div>-->
+<!--                            <div class="col-6">-->
+<!--                                <img src="image/off.png" alt="Off" class="img-fluid-control control-img" data-state="off" id="all-control">-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </div>
